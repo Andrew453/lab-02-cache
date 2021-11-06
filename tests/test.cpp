@@ -16,16 +16,16 @@ TEST(Cache, frontTest) {
   }
 }
 
-TEST(Cache, reverseTest) {
-  CacheDiagnostics cd;
-  cd.reverse_diagnostics(0);
-  double time = cd.statistics[0].duration_reverse;
-  if (time == 0.0) {
-    FAIL();
-  } else {
-    SUCCEED();
-  }
-}
+//TEST(Cache, reverseTest) {
+//  CacheDiagnostics cd;
+//  cd.reverse_diagnostics(0);
+//  double time = cd.statistics[0].duration_reverse;
+//  if (time == 0.0) {
+//    FAIL();
+//  } else {
+//    SUCCEED();
+//  }
+//}
 
 TEST(Cache, randomTest) {
   CacheDiagnostics cd;
