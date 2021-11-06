@@ -5,14 +5,14 @@
 
 #include <algorithm>
 #include <chrono>
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <random>
 #include <stdexcept>
 #include <vector>
 
-struct Statistics{
+struct Statistics {
   int experimentNumber_front;
   int experimentNumber_reverse;
   int experimentNumber_random;
@@ -28,23 +28,17 @@ class CacheDiagnostics {
   int sizes[5];
   Statistics statistics[5];
   int* arr;
-  unsigned int timer; // Время в ms
-  int last_size;
   void create_array(int num_size);
+
  public:
   CacheDiagnostics();
-//  TODO подумать, как лучше реализовать. (скорее всего через вектор,чтобы не гадать с длиной массива).
-//  void read_array_from_file();
   void front_diagnostics(int num_size);
   void reverse_diagnostics(int num_size);
   void random_diagnostics(int num_size);
   void formatting_output();
   void full_diagnostics();
-//  ~CacheDiagnostics();
+  //  ~CacheDiagnostics();
 };
-
-
-
 
 /*  Intel Core i5 8265U
  * cache_sizes['1'] = 256 KB

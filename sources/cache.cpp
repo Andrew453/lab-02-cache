@@ -31,8 +31,6 @@ void CacheDiagnostics::create_array(int num_size) {
 }
 
 void CacheDiagnostics::front_diagnostics(int num_size) {
-  //  TODO удалить это поле. сейчас оно чисто для просмотра работоспособности.
-  //  last_size = num_size;
   create_array(num_size);
   //  Прогрев
   for (int i = 0; i < sizes[num_size]; i += 16) {
@@ -49,8 +47,8 @@ void CacheDiagnostics::front_diagnostics(int num_size) {
   }
 
   auto end = (double)clock();
-  statistics[num_size].duration_front = ((end - start)/CLOCKS_PER_SEC)*1000;
-  statistics[num_size].experimentNumber_front = num_size+1;
+  statistics[num_size].duration_front = ((end - start) / CLOCKS_PER_SEC) * 1000;
+  statistics[num_size].experimentNumber_front = num_size + 1;
 }
 
 void CacheDiagnostics::reverse_diagnostics(int num_size) {
@@ -69,8 +67,9 @@ void CacheDiagnostics::reverse_diagnostics(int num_size) {
     }
   }
   auto end = (double)clock();
-  statistics[num_size].duration_reverse = ((end - start)/CLOCKS_PER_SEC)*1000;
-  statistics[num_size].experimentNumber_reverse = num_size+6;
+  statistics[num_size].duration_reverse =
+      ((end - start) / CLOCKS_PER_SEC) * 1000;
+  statistics[num_size].experimentNumber_reverse = num_size + 6;
 }
 
 void CacheDiagnostics::random_diagnostics(int num_size) {
@@ -86,43 +85,59 @@ void CacheDiagnostics::random_diagnostics(int num_size) {
   std::random_shuffle(ins.begin(), ins.end());
   // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
   // выполнения этой функции надо делать вывод, дабы не потерять данные
- auto start = (double)clock();
+  auto start = (double)clock();
 
   for (int i = 0; i < 1000; i++) {
     for (int j = 0; j < sizes[num_size] / 16; j++) {
       read_value = arr[ins[j]];
     }
   }
- auto end = (double)clock();
-  statistics[num_size].duration_random = ((end - start)/CLOCKS_PER_SEC)*1000;
-  statistics[num_size].experimentNumber_random = num_size+11;
+  auto end = (double)clock();
+  statistics[num_size].duration_random =
+      ((end - start) / CLOCKS_PER_SEC) * 1000;
+  statistics[num_size].experimentNumber_random = num_size + 11;
 }
 void CacheDiagnostics::formatting_output() {
-  std::cout << "  investigaion:\n" <<     "    travel_order: \"front\"\n" <<      "    experiments:\n";
-  for (int i=0;i<5;i++) {
-    std::cout <<     "    - experiment: " << statistics[i].experimentNumber_front <<    "\n";
-    std::cout <<     "        input_data:\n"
-                 "          buffer_size: \""<<statistics[i].bufferSize *4/1024<<"Kb\"\n";
-    std::cout <<     "        results:\n"
-                 "          duration: \""<< statistics[i].duration_front <<"ms\"\n";
+  std::cout << "  investigaion:\n"
+            << "    travel_order: \"front\"\n"
+            << "    experiments:\n";
+  for (int i = 0; i < 5; i++) {
+    std::cout << "    - experiment: " << statistics[i].experimentNumber_front
+              << "\n";
+    std::cout << "        input_data:\n"
+                 "          buffer_size: \""
+              << statistics[i].bufferSize * 4 / 1024 << "Kb\"\n";
+    std::cout << "        results:\n"
+                 "          duration: \""
+              << statistics[i].duration_front << "ms\"\n";
   }
 
-  std::cout << "  investigaion:\n" <<     "    travel_order: \"reverse\"\n" <<      "    experiments:\n";
-  for (int i=0;i<5;i++) {
-    std::cout <<     "    - experiment: " << statistics[i].experimentNumber_reverse <<    "\n";
-    std::cout <<     "        input_data:\n"
-                 "          buffer_size: \""<<statistics[i].bufferSize *4 /1024<<"Kb\"\n";
-    std::cout <<     "        results:\n"
-                 "          duration: \""<< statistics[i].duration_reverse <<"ms\"\n";
+  std::cout << "  investigaion:\n"
+            << "    travel_order: \"reverse\"\n"
+            << "    experiments:\n";
+  for (int i = 0; i < 5; i++) {
+    std::cout << "    - experiment: " << statistics[i].experimentNumber_reverse
+              << "\n";
+    std::cout << "        input_data:\n"
+                 "          buffer_size: \""
+              << statistics[i].bufferSize * 4 / 1024 << "Kb\"\n";
+    std::cout << "        results:\n"
+                 "          duration: \""
+              << statistics[i].duration_reverse << "ms\"\n";
   }
 
-  std::cout << "  investigaion:\n" <<     "    travel_order: \"random\"\n" <<      "    experiments:\n";
-  for (int i=0;i<5;i++) {
-    std::cout <<     "    - experiment: " << statistics[i].experimentNumber_random <<    "\n";
-    std::cout <<     "        input_data:\n"
-                 "          buffer_size: \""<<statistics[i].bufferSize *4/1024<<"Kb\"\n";
-    std::cout <<     "        results:\n"
-                 "          duration: \""<< statistics[i].duration_random <<"ms\"\n";
+  std::cout << "  investigaion:\n"
+            << "    travel_order: \"random\"\n"
+            << "    experiments:\n";
+  for (int i = 0; i < 5; i++) {
+    std::cout << "    - experiment: " << statistics[i].experimentNumber_random
+              << "\n";
+    std::cout << "        input_data:\n"
+                 "          buffer_size: \""
+              << statistics[i].bufferSize * 4 / 1024 << "Kb\"\n";
+    std::cout << "        results:\n"
+                 "          duration: \""
+              << statistics[i].duration_random << "ms\"\n";
   }
 }
 
@@ -137,5 +152,5 @@ void CacheDiagnostics::full_diagnostics() {
   for (int i = 0; i < 5; i++) {
     random_diagnostics(i);
   }
-//  formatting_output();
+  //  formatting_output();
 }
