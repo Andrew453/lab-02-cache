@@ -25,7 +25,6 @@ CacheDiagnostics::CacheDiagnostics() {
 }
 void CacheDiagnostics::create_array(int num_size) {
   arr = new int[sizes[num_size]];
-//  srand(time(NULL));
   for (int i = 0; i < sizes[num_size]; i++) {
     arr[i] = rand_r(&seed);
   }
@@ -33,12 +32,9 @@ void CacheDiagnostics::create_array(int num_size) {
 
 void CacheDiagnostics::front_diagnostics(int num_size) {
   create_array(num_size);
-  //  Прогрев
   for (int i = 0; i < sizes[num_size]; i += 16) {
     read_value = arr[i];
   }
-  // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
-  // выполнения этой функции надо делать вывод, дабы не потерять данные
   auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
@@ -54,12 +50,9 @@ void CacheDiagnostics::front_diagnostics(int num_size) {
 
 void CacheDiagnostics::reverse_diagnostics(int num_size) {
   create_array(num_size);
-  //  Прогрев
   for (int i = 0; i < sizes[num_size]; i += 16) {
     read_value = arr[i];
   }
-  // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
-  // выполнения этой функции надо делать вывод, дабы не потерять данные
   auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
@@ -75,7 +68,6 @@ void CacheDiagnostics::reverse_diagnostics(int num_size) {
 
 void CacheDiagnostics::random_diagnostics(int num_size) {
   create_array(num_size);
-  //  Прогрев
   for (int i = 0; i < sizes[num_size]; i += 16) {
     read_value = arr[i];
   }
@@ -84,8 +76,6 @@ void CacheDiagnostics::random_diagnostics(int num_size) {
     ins.push_back(i);
   }
   std::random_shuffle(ins.begin(), ins.end());
-  // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
-  // выполнения этой функции надо делать вывод, дабы не потерять данные
   auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
@@ -153,5 +143,8 @@ void CacheDiagnostics::full_diagnostics() {
   for (int i = 0; i < 5; i++) {
     random_diagnostics(i);
   }
-  //  formatting_output();
+}
+
+CacheDiagnostics::~CacheDiagnostics() {
+  delete[] arr;
 }
