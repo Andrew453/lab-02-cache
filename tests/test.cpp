@@ -1,20 +1,19 @@
 // Copyright 2021 Your Name <your_email>
 
-#include <stdexcept>
-
 #include <gtest/gtest.h>
 
 #include <cache.hpp>
+#include <stdexcept>
 
 TEST(Cache, frontTest) {
   CacheDiagnostics cd;
   cd.front_diagnostics(0);
   double time = cd.statistics[0].duration_front;
   if (time == 0.0) {
-      FAIL();
-    } else {
-      SUCCEED();
-    }
+    FAIL();
+  } else {
+    SUCCEED();
+  }
 }
 
 TEST(Cache, reverseTest) {
@@ -61,6 +60,5 @@ TEST(Cache, fullDiagnosticsTest) {
     FAIL();
   } else {
     SUCCEED();
-  } 
+  }
 }
-
