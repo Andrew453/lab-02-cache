@@ -24,6 +24,7 @@ struct Statistics {
 
 class CacheDiagnostics {
  private:
+  unsigned int seed;
   int read_value;
   int sizes[5];
   Statistics statistics[5];

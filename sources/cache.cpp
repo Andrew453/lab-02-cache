@@ -11,6 +11,7 @@
  */
 
 CacheDiagnostics::CacheDiagnostics() {
+  seed = 11111;
   sizes[0] = 131072 / 4;
   sizes[1] = 262144 / 4;
   sizes[2] = 1048576 / 4;
@@ -24,9 +25,9 @@ CacheDiagnostics::CacheDiagnostics() {
 }
 void CacheDiagnostics::create_array(int num_size) {
   arr = new int[sizes[num_size]];
-  srand(time(NULL));
+//  srand(time(NULL));
   for (int i = 0; i < sizes[num_size]; i++) {
-    arr[i] = rand();
+    arr[i] = rand_r(&seed);
   }
 }
 
@@ -38,7 +39,7 @@ void CacheDiagnostics::front_diagnostics(int num_size) {
   }
   // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
   // выполнения этой функции надо делать вывод, дабы не потерять данные
-  auto start = (double)clock();
+  auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
     for (int j = 0; j < sizes[num_size]; j += 16) {
@@ -46,7 +47,7 @@ void CacheDiagnostics::front_diagnostics(int num_size) {
     }
   }
 
-  auto end = (double)clock();
+  auto end = static_cast<double>(clock());
   statistics[num_size].duration_front = ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_front = num_size + 1;
 }
@@ -59,14 +60,14 @@ void CacheDiagnostics::reverse_diagnostics(int num_size) {
   }
   // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
   // выполнения этой функции надо делать вывод, дабы не потерять данные
-  auto start = (double)clock();
+  auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
     for (int j = sizes[num_size]; j > 0; j -= 16) {
       read_value = arr[j];
     }
   }
-  auto end = (double)clock();
+  auto end = static_cast<double>(clock());
   statistics[num_size].duration_reverse =
       ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_reverse = num_size + 6;
@@ -85,14 +86,14 @@ void CacheDiagnostics::random_diagnostics(int num_size) {
   std::random_shuffle(ins.begin(), ins.end());
   // Чтение + подсчет времени. Время работы  чтения лежит в timer -> после
   // выполнения этой функции надо делать вывод, дабы не потерять данные
-  auto start = (double)clock();
+  auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
     for (int j = 0; j < sizes[num_size] / 16; j++) {
       read_value = arr[ins[j]];
     }
   }
-  auto end = (double)clock();
+  auto end = static_cast<double>(clock());
   statistics[num_size].duration_random =
       ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_random = num_size + 11;
