@@ -46,6 +46,7 @@ void CacheDiagnostics::front_diagnostics(int num_size) {
   auto end = static_cast<double>(clock());
   statistics[num_size].duration_front = ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_front = num_size + 1;
+  delete[] arr;
 }
 
 void CacheDiagnostics::reverse_diagnostics(int num_size) {
@@ -65,6 +66,7 @@ void CacheDiagnostics::reverse_diagnostics(int num_size) {
   statistics[num_size].duration_reverse =
       ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_reverse = num_size + 6;
+  delete[] arr;
 }
 
 void CacheDiagnostics::random_diagnostics(int num_size) {
@@ -88,6 +90,7 @@ void CacheDiagnostics::random_diagnostics(int num_size) {
   statistics[num_size].duration_random =
       ((end - start) / CLOCKS_PER_SEC) * 1000;
   statistics[num_size].experimentNumber_random = num_size + 11;
+  delete[] arr;
 }
 void CacheDiagnostics::formatting_output() {
   std::cout << "  investigaion:\n"
