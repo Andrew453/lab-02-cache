@@ -57,8 +57,7 @@ void CacheDiagnostics::reverse_diagnostics(int num_size) {
   auto start = static_cast<double>(clock());
 
   for (int i = 0; i < 1000; i++) {
-    for (int j = 0; j < sizes[num_size]-1; j += 16)
-    {
+    for (int j = 0; j < sizes[num_size] - 1; j += 16) {
       read_value = arr[sizes[num_size] - j];
     }
   }
@@ -150,5 +149,5 @@ void CacheDiagnostics::full_diagnostics() {
 }
 
 CacheDiagnostics::~CacheDiagnostics() {
-  delete[] arr;
+  //  delete[] arr;
 }

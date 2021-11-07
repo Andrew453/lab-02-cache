@@ -16,7 +16,6 @@ TEST(Cache, frontTest) {
   }
 }
 
-
 TEST(Cache, randomTest) {
   CacheDiagnostics cd;
   cd.random_diagnostics(4);
@@ -38,4 +37,3 @@ TEST(Cache, reverseTest) {
     SUCCEED();
   }
 }
-
